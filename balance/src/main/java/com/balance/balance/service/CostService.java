@@ -1,5 +1,6 @@
 package com.balance.balance.service;
 
+import com.balance.balance.entity.dto.CostDTO;
 import com.balance.balance.entity.model.Cost;
 import com.balance.balance.entity.view.CostView;
 import com.balance.balance.repository.CostRepository;
@@ -20,6 +21,11 @@ public class CostService {
     @Autowired
     private ModelMapper modelMapper;
 
+
+    public void saveDTO(CostDTO costDTO) {
+        Cost cost = DTOToEntity(costDTO);
+        costRepository.save(cost);
+    }
     public List<CostView> listAllView() {
         return costRepository.findAll()
                 .stream()
@@ -30,5 +36,10 @@ public class CostService {
     private CostView convertToView(Cost cost){
         CostView costView= this.modelMapper.map(cost,CostView.class);
         return costView;
+    }
+
+    private Cost DTOToEntity(CostDTO costDTO){
+        Cost cost = this.modelMapper.map(costDTO, Cost.class);
+        return cost;
     }
 }

@@ -3,17 +3,21 @@ package com.balance.balance.service;
 
 import com.balance.balance.entity.dto.RegistryDTO;
 import com.balance.balance.entity.dto.WorkDayDTO;
+import com.balance.balance.entity.model.Login;
 import com.balance.balance.entity.model.Registry;
 import com.balance.balance.entity.model.WorkDay;
 import com.balance.balance.entity.view.RegistryView;
 import com.balance.balance.entity.view.WorkDayView;
 import com.balance.balance.repository.RegistryRepository;
 import com.balance.balance.repository.WorkDayRepository;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,17 +25,17 @@ import java.util.stream.Collectors;
 public class WorkDayService {
 
     @Autowired
-    WorkDayRepository workDayRepository;
+    private WorkDayRepository workDayRepository;
     @Autowired
-    RegistryRepository registryRepository;
+    private RegistryRepository registryRepository;
+    @Autowired private ModelMapper modelMapper;
+
+
 
     public void saveDTO(WorkDayDTO workDayDTO){
-        WorkDay workDay = convertDtoToEntity(workDayDTO);
-        Registry registry  = convertRegistry(workDayDTO.getRegistryDTO());
-        workDayRepository.save(convertDtoToEntity(workDayDTO));
+        WorkDay workday= convertDtoToEntity(workDayDTO);
+        workDayRepository.save(workday);
     }
-
-
 
 
     public List<WorkDayView> listAllViews() {
@@ -44,30 +48,22 @@ public class WorkDayService {
 
 
     private WorkDay convertDtoToEntity(WorkDayDTO workDayDTO) {
-        WorkDay workDay = new WorkDay();
-        workDay.setDate(workDayDTO.getDate());
-        workDay.setType(workDayDTO.getType());
-        workDay.setHours(workDayDTO.getHours());
-        workDay.setMorning(workDayDTO.getMorning());
-        workDay.setAfternoon(workDayDTO.getAfternoon());
-        workDay.setNotes(workDayDTO.getNotes());
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        WorkDay workDay = this.modelMapper.map(workDayDTO, WorkDay.class);
         return workDay;
     }
     private WorkDayView convertEntityToView(WorkDay workDay) {
-        WorkDayView workDayView = new WorkDayView();
-        workDayView.setDate(workDay.getDate());
-        workDayView.setType(workDay.getType());
-        workDayView.setHours(workDay.getHours());
-        workDayView.setMorning(workDay.getMorning());
-        workDayView.setAfternoon(workDay.getAfternoon());
-        workDayView.setNotes(workDay.getNotes());
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        WorkDayView workDayView = this.modelMapper.map(workDay, WorkDayView.class);
         return workDayView;
     }
     public Registry convertRegistry(RegistryDTO registryDTO){
-        Registry registry=new Registry();
-        registry.setName(registryDTO.getName());
-        registry.setSurname(registryDTO.getSurname());
+        Registry registry=this.modelMapper.map(registryDTO, Registry.class);
         return registry;
     }
+
+
 
 }

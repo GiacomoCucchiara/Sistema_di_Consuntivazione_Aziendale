@@ -1,9 +1,6 @@
 package com.balance.balance.entity.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +10,7 @@ import java.sql.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
-
+@Data
 public class CostDTO {
     @NotEmpty
     private String type;
@@ -26,4 +21,5 @@ public class CostDTO {
     @NotEmpty
     private String place;
     private String notes;
+    private DtoId registry;
 }

@@ -25,18 +25,14 @@ public class WorkDay {
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     private Date date;
-
     private String type;
-
-    private double hours;
-
+    private Double hours;
     private String morning;
-
     private String afternoon;
     private String confirm;
     private Boolean notes;
-    @ManyToMany(mappedBy = "workDayList")
-    List<Registry> registryList = new ArrayList<>();
+    @ManyToMany
+    private List<Registry> registries;
 
 
 

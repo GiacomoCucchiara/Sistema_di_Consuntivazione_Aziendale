@@ -16,11 +16,14 @@ public interface RegistryRepository extends JpaRepository<Registry, Long> {
 
     List<Registry> findBySurname(String surname);
 
-    List<Registry> findByName(String name);
+    String findByName(String name);
 
     void save(RegistryDTO registryDTO);
 
     @Query(value = "SELECT * FROM registry WHERE usergroup_id = :id", nativeQuery = true)
     List<Registry> findByUserGroupId(@Param("id") Long id);
+
+    @Query(value="SELECT * FROM registry Where name = :string1 AND surname = :string2", nativeQuery = true)
+    Boolean checkRegistryInDB(@Param("string1") String string1 , @Param("string2") String string2);
 
 }

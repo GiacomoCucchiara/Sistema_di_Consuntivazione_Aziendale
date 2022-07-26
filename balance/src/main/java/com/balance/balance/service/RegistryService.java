@@ -1,13 +1,12 @@
 package com.balance.balance.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +57,7 @@ public class RegistryService {
         registryRepository.findById(id);
     }
 
-    public List<Registry> getByName(String name) {
+    public String getByName(String name) {
         return registryRepository.findByName(name);
     }
 
@@ -74,12 +73,17 @@ public class RegistryService {
     }
 
     private Registry convertDtoToEntity(RegistryDTO registryDTO) {
-        Registry registry = this.modelMapper.map(registryDTO, Registry.class);
+        Registry registry = new Registry();
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+         this.modelMapper.map(registryDTO, registry);
         return registry;
 
     }
 
     private RegistryView convertEntityToView(Registry registry) {
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
         RegistryView registryView = this.modelMapper.map(registry,RegistryView.class);
         return registryView;
 

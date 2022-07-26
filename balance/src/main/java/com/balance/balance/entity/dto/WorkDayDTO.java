@@ -1,21 +1,18 @@
 package com.balance.balance.entity.dto;
 
 import com.balance.balance.entity.view.RegistryView;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import javax.persistence.SecondaryTable;
 import javax.validation.constraints.NotEmpty;
 import java.sql.Date;
 import java.sql.Time;
-
+import java.util.List;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class WorkDayDTO {
 
     private Date date;
@@ -27,7 +24,6 @@ public class WorkDayDTO {
     private String morning;
     @NotEmpty
     private String afternoon;
-
     private Boolean notes;
-    RegistryDTO registryDTO;
+    private List<DtoId> registries;
 }

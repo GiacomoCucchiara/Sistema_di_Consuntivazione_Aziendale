@@ -25,7 +25,7 @@ public class WorkDayController {
     public ResponseEntity<?> add(@RequestBody WorkDayDTO workDayDTO){
         try{
             workDayService.saveDTO(workDayDTO);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(e, HttpStatus.FORBIDDEN);
         }
