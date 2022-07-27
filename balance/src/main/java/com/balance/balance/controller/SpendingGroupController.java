@@ -1,9 +1,6 @@
 package com.balance.balance.controller;
 
-import com.balance.balance.entity.dto.RegistryDTO;
 import com.balance.balance.entity.dto.SpendingGroupDTO;
-import com.balance.balance.entity.model.SpendingGroup;
-import com.balance.balance.entity.view.CostView;
 import com.balance.balance.entity.view.SpendingGroupView;
 import com.balance.balance.service.SpendingGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +19,11 @@ public class SpendingGroupController {
     @Autowired
     private SpendingGroupService spendingGroupService;
 
-    @GetMapping("/cost")
+    @GetMapping("/spendinggroup")
     public ResponseEntity<List<SpendingGroupView>> listView (){
         return new ResponseEntity<>(spendingGroupService.listAllView(), HttpStatus.OK);
     }
-    @PostMapping("/cost")
+    @PostMapping("/spendinggroup")
     public ResponseEntity<?> add(@Valid @RequestBody SpendingGroupDTO spendingGroupDTO) {
         try {
             spendingGroupService.saveDTO(spendingGroupDTO);

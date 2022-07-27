@@ -4,6 +4,8 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.balance.balance.entity.dto.LoginDTO;
@@ -21,8 +23,13 @@ public class LoginService {
     private LoginRepository loginRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void saveDTO(LoginDTO loginDTO) {
+        Login login = convertDtoToEntity(loginDTO);
+        login.setPassword(passwordEncoder.encode(login.getPassword()));
+
         loginRepository.save(convertDtoToEntity(loginDTO));
     }
     public List<LoginView> listAll(){
