@@ -53,7 +53,9 @@ public class SpendingGroupService {
 
     public UserGroup convertUserGroup(UserGroupDTO userGroupDTO) {
         UserGroup userGroup = this.modelMapper.map(userGroupDTO, UserGroup.class);
-        return userGroup;}
+        return userGroup;
+    }
+
     public Boolean checkGroup(SpendingGroupDTO spendingGroupDTO,SpendingGroup spendingGroup){
         if(!userGroupRepository.findAll().contains(spendingGroupDTO.getUserGroupDTO().getName())){
             UserGroup userGroup = convertUserGroup(spendingGroupDTO.getUserGroupDTO());

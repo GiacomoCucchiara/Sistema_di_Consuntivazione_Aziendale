@@ -1,9 +1,14 @@
 package com.balance.balance.service;
 
 import com.balance.balance.entity.dto.CostDTO;
+import com.balance.balance.entity.dto.SpendingGroupDTO;
+import com.balance.balance.entity.dto.UserGroupDTO;
 import com.balance.balance.entity.model.Cost;
+import com.balance.balance.entity.model.SpendingGroup;
+import com.balance.balance.entity.model.UserGroup;
 import com.balance.balance.entity.view.CostView;
 import com.balance.balance.repository.CostRepository;
+import com.balance.balance.repository.SpendingGroupRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +25,8 @@ public class CostService {
     private CostRepository costRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private SpendingGroupRepository spendingGroupRepository;
 
 
     public void saveDTO(CostDTO costDTO) {
@@ -42,4 +49,18 @@ public class CostService {
         Cost cost = this.modelMapper.map(costDTO, Cost.class);
         return cost;
     }
+    /*public SpendingGroup converSpendingGroup(SpendingGroupDTO spendingGroupDTO) {
+        SpendingGroup spendingGroup = this.modelMapper.map(spendingGroupDTO, SpendingGroup.class);
+        return spendingGroup;
+    }
+    public Boolean checkGroupSpendingGroup(CostDTO costDTO, Cost cost){
+        if(!spendingGroupRepository.findAll().contains(costDTO.getSpendingGroupDTO().getName())){
+            SpendingGroup spendingGroup = converSpendingGroup(costDTO.getSpendingGroupDTO());
+            spendingGroupRepository.save(spendingGroup);
+            cost.setSpendingGroup(converSpendingGroup(costDTO.getSpendingGroupDTO()));
+        }else{
+            cost.setSpendingGroup(converSpendingGroup(costDTO.getSpendingGroupDTO()));
+        }
+        return null;
+    }*/
 }
