@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.balance.balance.entity.dto.LoginDTO;
@@ -33,7 +34,8 @@ public class RegistryService {
     private UserGroupRepository userGroupRepository;
     @Autowired
     private LoginRepository loginRepository;
-    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -41,6 +43,7 @@ public class RegistryService {
         Registry registry = convertDtoToEntity(registryDTO);
         checkGroup(registryDTO,registry);
         Login login = convertLogin(registryDTO.getLoginDTO());
+        login.setPassword(passwordEncoder.encode(login.getPassword()));
         registry.setLogin(login);
         registryRepository.save(registry);
     }

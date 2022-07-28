@@ -24,13 +24,12 @@ public class LoginService {
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder PasswordEncoderr;
 
     public void saveDTO(LoginDTO loginDTO) {
-        Login login = convertDtoToEntity(loginDTO);
-        login.setPassword(passwordEncoder.encode(login.getPassword()));
-
-        loginRepository.save(convertDtoToEntity(loginDTO));
+        Login login= convertDtoToEntity(loginDTO);
+        login.setPassword(PasswordEncoderr.encode(loginDTO.getPassword()));;
+        loginRepository.save(login);
     }
     public List<LoginView> listAll(){
         return loginRepository.findAll()

@@ -1,8 +1,10 @@
 package com.balance.balance.entity.dto;
 
+import com.balance.balance.entity.model.UserGroup;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 
 @AllArgsConstructor
@@ -12,8 +14,9 @@ import javax.validation.constraints.NotEmpty;
 public class SpendingGroupDTO {
     @NotEmpty
     private String name;
-    @NotEmpty
+
     private Integer minCost;
-    @NotEmpty
     private Integer maxCost;
+    @NotNull
+    private UserGroupDTO userGroupDTO;
 }

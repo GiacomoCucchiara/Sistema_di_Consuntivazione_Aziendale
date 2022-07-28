@@ -22,4 +22,5 @@ public class CostDTO {
     private String place;
     private String notes;
     private DtoId registry;
+    private DtoId spendingGroup;
 }
