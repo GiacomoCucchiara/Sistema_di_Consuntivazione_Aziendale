@@ -1,6 +1,7 @@
 package com.balance.balance.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,5 +26,8 @@ public interface RegistryRepository extends JpaRepository<Registry, Long> {
 
     @Query(value="SELECT * FROM registry Where name = :string1 AND surname = :string2", nativeQuery = true)
     Boolean checkRegistryInDB(@Param("string1") String string1 , @Param("string2") String string2);
+
+    void delete(Registry registry);
+
 
 }

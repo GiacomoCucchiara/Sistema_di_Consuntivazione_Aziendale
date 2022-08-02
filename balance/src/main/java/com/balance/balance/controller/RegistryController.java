@@ -29,14 +29,18 @@ public class RegistryController {
     }
 
     @PostMapping("/registry")
-    public ResponseEntity<?> add(@Valid @RequestBody  RegistryDTO registryDTO) {
+    public ResponseEntity<RegistryView> add(@Valid @RequestBody RegistryDTO registryDTO) {
         try {
-            registryService.saveDTO(registryDTO);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            RegistryView saved = registryService.saveDTO(registryDTO);
+            return new ResponseEntity<>(saved, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
+    @DeleteMapping("/registry/dell={id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+            registryService.deleteById(id);
+            return new ResponseEntity<>( HttpStatus.ACCEPTED);
+    }
 }
-// javax validation constraints

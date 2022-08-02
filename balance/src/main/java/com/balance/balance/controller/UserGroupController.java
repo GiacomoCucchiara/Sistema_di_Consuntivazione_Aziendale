@@ -3,6 +3,7 @@ package com.balance.balance.controller;
 import java.util.List;
 
 import com.balance.balance.entity.dto.UserGroupDTO;
+import com.balance.balance.entity.model.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,19 +22,13 @@ public class UserGroupController {
         return new ResponseEntity<>(userGroupservice.listAllView(), HttpStatus.OK);
     }
 
-    // NON FUNZIONA
-    @GetMapping("/usergroup/{name}")
-    public ResponseEntity<List<UserGroupView>> get(@PathVariable String name) {
-        return new ResponseEntity<>(userGroupservice.getByName(name), HttpStatus.OK);
-    }
-
     @PostMapping("/usergroup")
-    public ResponseEntity<?> add(@RequestBody UserGroupDTO userGroupDTO) {
+    public ResponseEntity<UserGroupView> add(@RequestBody UserGroupDTO userGroupDTO) {
         try {
-            userGroupservice.saveDTO(userGroupDTO);
-            return new ResponseEntity<>(HttpStatus.OK);
+            UserGroupView saved = userGroupservice.saveDTO(userGroupDTO);
+            return new ResponseEntity<>(saved ,  HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e , HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

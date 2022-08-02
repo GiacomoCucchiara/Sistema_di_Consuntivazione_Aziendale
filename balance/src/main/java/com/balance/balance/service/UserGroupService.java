@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.balance.balance.entity.dto.RegistryDTO;
+import com.balance.balance.entity.model.Registry;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,16 @@ public class UserGroupService {
     private  UserGroupRepository userGroupRepository;
     @Autowired
     private ModelMapper modelMapper;
-    public void saveDTO(UserGroupDTO userGroupDTO) {
-        userGroupRepository.save(convertDtoToEntity(userGroupDTO));
+    public UserGroupView saveDTO(UserGroupDTO userGroupDTO) {
+            UserGroup saved = new UserGroup();
+        if(!userGroupRepository.findAll().contains(userGroupDTO.getName())){
+            saved = userGroupRepository.save(convertDtoToEntity(userGroupDTO));
+        } else{
+            return userGroupRepository.findByName(userGroupDTO.getName());
+        }
+        return convertEntityToView(saved);
     }
+
 
     public List<UserGroupView> listAllView() {
         return userGroupRepository.findAll()
@@ -51,10 +60,16 @@ public class UserGroupService {
        // userGroup.setId(userGroupDTO.getId());
         return userGroup;
     }
+    private UserGroupDTO convertEntityToDTO (UserGroup userGroup) {
+        UserGroupDTO userGroupDTO = this.modelMapper.map(userGroup, UserGroupDTO.class);
+        // userGroup.setId(userGroupDTO.getId());
+        return userGroupDTO;
+    }
 
     private UserGroupView convertEntityToView(UserGroup userGroup) {
         UserGroupView userGroupView = this.modelMapper.map(userGroup, UserGroupView.class);
         return userGroupView;
     }
+
 
 }

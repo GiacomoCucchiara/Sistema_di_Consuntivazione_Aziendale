@@ -17,4 +17,5 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, Long> {
 
     List<UserGroupView> findOneByNameEquals(@Param("name") String name);
 
+    UserGroupView findByName(String name);
 }

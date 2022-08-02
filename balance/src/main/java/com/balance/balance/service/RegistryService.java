@@ -1,6 +1,7 @@
 package com.balance.balance.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -39,13 +40,14 @@ public class RegistryService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public void saveDTO (RegistryDTO registryDTO){
+    public RegistryView saveDTO (RegistryDTO registryDTO){
         Registry registry = convertDtoToEntity(registryDTO);
         checkGroup(registryDTO,registry);
         Login login = convertLogin(registryDTO.getLoginDTO());
         login.setPassword(passwordEncoder.encode(login.getPassword()));
         registry.setLogin(login);
         registryRepository.save(registry);
+        return convertEntityToView(registry);
     }
 
     public List<RegistryView> listAllViews() {
@@ -74,6 +76,10 @@ public class RegistryService {
                 .map(this::convertEntityToView)
                 .collect(Collectors.toList());
     }
+    public void deleteById(Long id){
+        registryRepository.deleteById(id);
+    }
+
 
     private Registry convertDtoToEntity(RegistryDTO registryDTO) {
         Registry registry = new Registry();
@@ -81,6 +87,15 @@ public class RegistryService {
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
          this.modelMapper.map(registryDTO, registry);
         return registry;
+
+    }
+
+    private RegistryDTO converEntityToDTO(Registry registry) {
+        RegistryDTO registryDTO = new RegistryDTO();
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        this.modelMapper.map(registry, registryDTO);
+        return registryDTO;
 
     }
 
