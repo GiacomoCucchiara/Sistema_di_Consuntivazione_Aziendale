@@ -37,6 +37,10 @@ public class LoginService {
                 .map(this::convertEntityToView)
                 .collect(Collectors.toList());
     }
+
+    public void delete(Long id){
+        loginRepository.deleteById(id);
+    }
     private Login convertDtoToEntity(LoginDTO loginDTO) {
         Login login = this.modelMapper.map(loginDTO, Login.class);
         return login;

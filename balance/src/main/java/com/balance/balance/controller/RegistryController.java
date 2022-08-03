@@ -38,9 +38,9 @@ public class RegistryController {
         }
     }
 
-    @DeleteMapping("/registry/dell={id}")
+  /*  @DeleteMapping("/registry/dell={id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
             registryService.deleteById(id);
             return new ResponseEntity<>( HttpStatus.ACCEPTED);
-    }
+    }*/
 }

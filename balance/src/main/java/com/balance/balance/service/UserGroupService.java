@@ -34,6 +34,9 @@ public class UserGroupService {
         }
         return convertEntityToView(saved);
     }
+    public void delete(Long id){
+        userGroupRepository.deleteById(id);
+    }
 
 
     public List<UserGroupView> listAllView() {

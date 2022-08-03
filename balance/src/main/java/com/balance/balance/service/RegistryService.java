@@ -76,9 +76,10 @@ public class RegistryService {
                 .map(this::convertEntityToView)
                 .collect(Collectors.toList());
     }
-    public void deleteById(Long id){
+    
+   /* public void deleteById(Long id){
         registryRepository.deleteById(id);
-    }
+    }*/
 
 
     private Registry convertDtoToEntity(RegistryDTO registryDTO) {
